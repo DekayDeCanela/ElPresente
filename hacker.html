@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presunta hacker asesinada en su casa - El Presente</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ---- Estilos locales de la página de artículo ---- */
+    body { background: #fdfdfd; font-family: Georgia, serif; color: #222; }
+    header.top-header { background: #cc6a5f; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; color: white; }
+    header .logo img { height: 40px; }
+    header nav ul { list-style: none; display: flex; gap: 20px; }
+    header nav a { color: white; text-decoration: none; font-weight: bold; }
+
+    /* ✅ artículo ahora no se centra con margin:auto */
+    .article-container {
+      max-width: 820px;
+      width: 100%;
+      margin: 0;                 /* antes: 40px auto */
+      padding: 20px;
+      background: white;
+    }
+
+    .category { font-size: 0.9em; font-weight: bold; text-transform: uppercase; color: #555; border-bottom: 2px solid black; display: inline-block; padding-bottom: 3px; }
+    h1 { font-size: 2em; font-weight: bold; margin: 15px 0; }
+    .subtitle { font-size: 1.1em; color: #555; margin-bottom: 20px; }
+    .meta { font-size: 0.9em; color: #777; margin-bottom: 15px; }
+    .article-container img { width: 100%; height: auto; border-bottom: 1px solid #ddd; margin-bottom: 10px; }
+    .caption { font-size: 0.8em; color: #666; text-align: right; margin-bottom: 20px; }
+    p { font-size: 1.1em; line-height: 1.7em; text-align: justify; margin-bottom: 15px; }
+    .btn-volver { display: inline-block; margin-top: 20px; background: #c0392b; color: white; text-decoration: none; padding: 8px 15px; border-radius: 3px; font-size: 0.9em; }
+    .btn-volver:hover { background: #a93226; }
+
+    /* --- AUTOR Y REDES --- */
+    .author-box { display: flex; align-items: center; gap: 15px; border-top: 1px solid #ddd; padding-top: 15px; margin-top: 30px; }
+    .author-box img { width: 50px; height: 50px; border-radius: 50%; }
+    .author-info { font-size: 0.9em; }
+    .author-info strong { font-size: 1em; color: #222; }
+    .author-info span { display: block; color: #777; font-size: 0.85em; }
+    .social-icons { margin-top: 10px; }
+    .social-icons a { text-decoration: none; font-size: 1.2em; margin-right: 8px; color: #444; }
+    .social-icons a:hover { color: #c0392b; }
+
+    /* --- TEXTO DETALLADO --- */
+    .extended-description { border-top: 1px solid #ddd; margin-top: 20px; padding-top: 15px; }
+    .extended-description p a { color: #0066cc; text-decoration: underline; }
+    .extended-description p a:hover { color: #c0392b; }
+
+    /* ====== Layout de dos columnas (artículo | comentarios) ====== */
+    .content-grid {
+      max-width: 1200px;
+      margin: 40px auto;
+      display: grid;
+      grid-template-columns: 1fr 380px; /* izquierda: artículo | derecha: sidebar */
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* Sidebar de comentarios */
+    .comments-sidebar { position: sticky; top: 84px; }
+    .comments-sidebar h3 { margin: 0 0 14px 0; font-size: 1.25rem; color: #2a2a2a; font-weight: 700; }
+    .comments-list { display: flex; flex-direction: column; gap: 16px; }
+
+    .comment-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 1px 2px rgba(0,0,0,.06), 0 6px 18px rgba(0,0,0,.06);
+      border: 1px solid rgba(0,0,0,.06);
+    }
+
+    .comment-item .avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      object-fit: cover; flex: 0 0 44px;
+    }
+
+    .comment-body { flex: 1; }
+    .comment-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .comment-header .name { font-weight: 700; color: #1f2937; }
+    .comment-header .time { font-size: .9rem; color: #9aa3af; }
+    .comment-header .dot { color: #cbd5e1; }
+    .comment-text { margin: 0; line-height: 1.6; color: #3a3a3a; }
+
+    /* Responsive: en móvil se apila */
+    @media (max-width: 980px) {
+      .content-grid { grid-template-columns: 1fr; }
+      .comments-sidebar { position: static; top: auto; }
+    }
+
+    /* (Compat) si queda tu regla vieja, aseguramos tamaño de avatar */
+    .comments-section img,
+    .comments-list img {
+      width: 44px !important; height: 44px !important;
+      max-width: 44px !important; max-height: 44px !important;
+      object-fit: cover !important; border-radius: 50% !important; display: block;
+    }
+  </style>
+</head>
+<body>
+
+<header class="top-header">
+  <div class="logo"><img src="source/logoP.png" alt="Logo Diario El Presente"></div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="#">Política</a></li>
+      <li><a href="#">Mundo</a></li>
+      <li><a href="#">Tecnología</a></li>
+      <li><a href="#">Cultura</a></li>
+      <li><a href="#">Opinión</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ✅ Ahora el artículo y los comentarios están dentro del grid -->
+<div class="content-grid">
+  <article class="article-container">
+    <span class="category">CIBERCRIMEN</span>
+    <h1>Presunta hacker asesinada en su casa</h1>
+    <p class="subtitle">La joven de 20 años, conocida en foros como "Minerva", fue encontrada sin vida en su apartamento. Se investiga si su actividad en línea está relacionada con el crimen.</p>
+    <p class="meta">31 de Octubre 2019 | Por Redacción El Presente</p>
+
+    <img src="source/hackerF.png" alt="Imagen noticia hacker">
+    <p class="caption">Lugar donde la policía encontró a la joven. Las investigaciones continúan. (Foto: Archivo)</p>
+
+    <p>El 31 de Octubre 2019, una joven de 20 años fue hallada sin vida al interior de su apartamento. Varios disparos en el pecho fueron la causa de su muerte. La víctima, finalmente identificada como Lucía Torres, era una presunta hacker con el alias de "Minerva" en internet.</p>
+
+    <!-- Autor -->
+    <div class="author-box">
+      <img src="https://www.joanboira.com/wp-content/uploads/2022/03/Filippo6039_w_1024-1.jpg" alt="Foto autor">
+      <div class="author-info">
+        <strong>Giancarlo Vendredi</strong>
+        <span>El Presente - 31 OCT 2019 - 10:15 CEST</span>
+        <div class="social-icons">
+          <a href="#">🔗</a>
+          <a href="#">🐦</a>
+          <a href="#">📘</a>
+          <a href="#">💬</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cuerpo -->
+    <div class="extended-description">
+      <p>Una <a href="#">investigación policial</a> se ha puesto en marcha para esclarecer los motivos detrás del crimen. Fuentes cercanas revelan que la joven, conocida bajo el alias <strong>"Minerva"</strong>, podría haber sido víctima de represalias debido a su actividad en foros de hacking ético y ciberdelitos. Los agentes han solicitado colaboración internacional, ya que se sospecha que el caso podría estar vinculado a grupos organizados que operan en la <em>dark web</em>.</p>
+
+      <p>Durante el registro del apartamento, los investigadores confiscaron múltiples dispositivos electrónicos, entre ellos portátiles encriptados, discos duros y teléfonos móviles. <em>“El nivel de seguridad de sus equipos es inusual, incluso para un hacker profesional”</em>, comentó uno de los peritos digitales. La policía está trabajando con expertos en ciberseguridad para acceder a la información y determinar si contiene pistas clave.</p>
+
+      <p>Vecinos han mostrado su preocupación y exigen mayor seguridad en la zona. <em>“Era una persona tranquila, siempre conectada a su ordenador, nunca nos imaginamos algo así”</em>, declaró una residente del edificio. Otros testigos aseguran haber visto a un individuo desconocido merodeando por los alrededores días antes del crimen, lo que ha llevado a la policía a ampliar el rango de búsqueda de sospechosos.</p>
+
+      <p>Expertos señalan que los hackers, incluso aquellos con fines éticos, suelen ser blanco de amenazas cuando sus investigaciones interfieren con intereses criminales. <em>“El simple hecho de exponer vulnerabilidades puede poner a una persona en riesgo”</em>, explicó Laura Martínez, especialista en ciberseguridad. Según esta hipótesis, Minerva podría haber descubierto información comprometedora para ciertos grupos.</p>
+
+      <p>Las autoridades no descartan que el crimen esté relacionado con una filtración reciente de datos gubernamentales en foros clandestinos. Asimismo, se analiza la posibilidad de que la joven mantuviera vínculos con informantes anónimos en el extranjero, lo que podría haber desencadenado represalias.</p>
+
+      <p>Mientras tanto, la comunidad en línea ha reaccionado con conmoción. Varios usuarios de foros de hacking han publicado mensajes en memoria de Minerva, advirtiendo que <strong>“su muerte no será en vano”</strong> y exigiendo justicia. En paralelo, activistas digitales han comenzado a filtrar información que podría estar relacionada con el caso, complicando aún más las investigaciones.</p>
+
+      <p>La policía continuará recolectando pruebas digitales, realizando interrogatorios y analizando posibles conexiones internacionales. El caso sigue abierto y se espera que en los próximos días se revelen más detalles que podrían cambiar el rumbo de la investigación.</p>
+    </div>
+
+    <a href="index.html" class="btn-volver">← Ver más noticias</a>
+  </article>
+
+  <!-- Sidebar de comentarios a la derecha -->
+  <aside class="comments-sidebar">
+    <h3>Comments</h3>
+    <div id="comments-container" class="comments-list"><!-- main.js pintará aquí --></div>
+  </aside>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
